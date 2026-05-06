@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About - PhishGuard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #05070d;
+            color: #e5e7eb;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 80px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            color: #00ff9d;
+        }
+
+        .card {
+            background: rgba(0, 255, 157, 0.05);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
+        }
+
+        p {
+            line-height: 1.6;
+            color: #9ca3af;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: #00ff9d;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>About <span class="highlight">PhishRadar</span></h1>
+
+        <div class="card">
+            <p>
+                PhishRadar is a machine learning-powered tool designed to help users identify
+                potentially malicious or phishing websites instantly.
+            </p>
+
+            <p>
+                By analyzing URL structures and patterns commonly used in phishing attacks,
+                the system predicts whether a link is safe or suspicious.
+            </p>
+
+            <p>
+                This project was built as a Final Year Project to explore the intersection of
+                cybersecurity and machine learning, with the goal of making the internet a safer place.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3 class="highlight">How it works</h3>
+            <p>
+                • URL is cleaned and processed<br>
+                • Features are extracted from the link<br>
+                • A trained ML model classifies it as safe or phishing<br>
+                • Confidence score is returned to the user
+            </p>
+        </div>
+
+        <a href="/" class="btn">← Back to Home</a>
+    </div>
+
+</body>
+</html>

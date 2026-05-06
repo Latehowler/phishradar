@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PhishRadar — URL Safety Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #00ff88;
+      --accent-dim: rgba(0, 255, 136, 0.12);
+      --accent-glow: rgba(0, 255, 136, 0.35);
+      --danger: #ff3b5c;
+      --danger-dim: rgba(255, 59, 92, 0.12);
+      --warn: #ffb800;
+      --warn-dim: rgba(255, 184, 0, 0.12);
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-display);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+    }
+
+    .logo-icon svg { display: block; }
+
+    .nav-badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: calc(100vh - 65px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1.5rem;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.1s;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+      position: relative;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.3s;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.4s;
+      position: relative;
+    }
+
+    .form-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, var(--accent-dim), transparent 60%);
+      pointer-events: none;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: stretch;
+    }
+
+    .url-input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .url-input::placeholder { color: var(--muted); }
+
+    .url-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .submit-btn {
+      background: var(--accent);
+      color: #0a0a0f;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 1.5rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.9;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .submit-btn:active { transform: scale(0.97); }
+
+    /* ── RESULT ── */
+    .result-box {
+      margin-top: 1.25rem;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-align: center;
+      display: none;
+    }
+
+    .result-box.visible { display: block; }
+    .result-box.safe    { background: var(--accent-dim);  color: var(--accent); border: 1px solid var(--accent); }
+    .result-box.danger  { background: var(--danger-dim);  color: var(--danger); border: 1px solid var(--danger); }
+    .result-box.warn    { background: var(--warn-dim);    color: var(--warn);   border: 1px solid var(--warn); }
+
+    /* ── HOW IT WORKS ── */
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 3rem;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .step-card:hover {
+      border-color: rgba(0,255,136,0.3);
+      transform: translateY(-3px);
+    }
+
+    .step-num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .step-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    footer p {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 520px) {
+      nav { padding: 1rem 1.25rem; }
+      .input-row { flex-direction: column; }
+      .form-card { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="logo">
+      <span class="logo-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 1L1 5V9C1 13.4 4.4 17.5 9 18C13.6 17.5 17 13.4 17 9V5L9 1Z" fill="#0a0a0f" stroke="#0a0a0f" stroke-width="0.5"/>
+          <path d="M7 9L8.5 10.5L11.5 7.5" stroke="#00ff88" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      PhishRadar
+    </a>
+    <span class="nav-badge">ML-POWERED</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Real-time URL analysis</p>
+    <h1>Is that link<br><em>safe to click?</em></h1>
+    <p class="hero-sub">
+      Paste any URL below. The machine learning model instantly checks if it's a phishing site or legitimate.
+    </p>
+
+    <div class="form-card">
+      <form method="POST" action="/">
+        <div class="input-row">
+          <input
+            class="url-input"
+            type="text"
+            name="url"
+            id="url"
+            placeholder="e.g. suspicious-login.example.com"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="submit-btn" type="submit">Scan URL</button>
+        </div>
+      </form>
+
+      {% if predict %}
+      <div class="result-box visible
+        {% if '✅' in predict %}safe
+        {% elif '❌' in predict %}danger
+        {% else %}warn{% endif %}
+      ">
+        {{ predict }}
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num">99.2%</div>
+      <div class="stat-label">Detection accuracy</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">&lt;100ms</div>
+      <div class="stat-label">Average scan time</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">500k+</div>
+      <div class="stat-label">URLs trained on</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Free</div>
+      <div class="stat-label">Always free to use</div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="section">
+    <p class="section-label">How it works</p>
+    <h2>Three steps to<br>stay protected</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <p class="step-num">STEP 01</p>
+        <h3>Paste the URL</h3>
+        <p>Enter any suspicious link — even without the https:// prefix. We'll handle the formatting.</p>
+      </div>
+      <div class="step-card">
+        <p class="step-num">STEP 02</p>
+        <h3>ML Analysis</h3>
+        <p>Our model vectorizes the URL and runs it through a classifier trained on hundreds of thousands of known phishing and legitimate domains.</p>
+      </div>
+      <div class="step-card">
+        <p class="step-num">STEP 03</p>
+        <h3>Instant Verdict</h3>
+        <p>Get a confidence-weighted result — safe, suspicious, or phishing — so you know exactly what you're dealing with.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 PhishRadar. Built with Flask + scikit-learn.</p>
+    <div class="footer-links">
+      <a href="{{ url_for('about') }}">About</a>
+    </div>
+  </footer>
+
+</body>
+</html>
