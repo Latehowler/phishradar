@@ -13,16 +13,20 @@
     :root {
       --bg: #0a0a0f;
       --surface: #111118;
+      --surface2: #16161f;
       --border: #1e1e2e;
+      --border2: #2a2a3a;
       --accent: #00ff88;
-      --accent-dim: rgba(0, 255, 136, 0.12);
+      --accent-dim: rgba(0, 255, 136, 0.10);
       --accent-glow: rgba(0, 255, 136, 0.35);
+      --accent-border: rgba(0, 255, 136, 0.28);
       --danger: #ff3b5c;
       --danger-dim: rgba(255, 59, 92, 0.12);
       --warn: #ffb800;
       --warn-dim: rgba(255, 184, 0, 0.12);
       --text: #e8e8f0;
       --muted: #6b6b80;
+      --faint: #3a3a4a;
       --font-display: 'Syne', sans-serif;
       --font-mono: 'Space Mono', monospace;
     }
@@ -40,323 +44,330 @@
     /* ── GRID BACKGROUND ── */
     body::before {
       content: '';
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background-image:
         linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
       background-size: 48px 48px;
-      pointer-events: none;
-      z-index: 0;
+      pointer-events: none; z-index: 0;
     }
 
     /* ── NAV ── */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 1.25rem 2.5rem;
-      background: rgba(10,10,15,0.85);
+      background: rgba(10,10,15,0.88);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
-
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 1.15rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      text-decoration: none;
-      color: var(--text);
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em;
+      text-decoration: none; color: var(--text);
     }
-
     .logo-icon {
-      width: 32px;
-      height: 32px;
-      background: var(--accent);
-      border-radius: 6px;
-      display: grid;
-      place-items: center;
+      width: 32px; height: 32px; background: var(--accent);
+      border-radius: 6px; display: grid; place-items: center;
     }
-
-    .logo-icon svg { display: block; }
-
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-link {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--muted); text-decoration: none; letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--accent); }
     .nav-badge {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      padding: 0.2rem 0.6rem;
-      border-radius: 100px;
-      letter-spacing: 0.08em;
+      font-family: var(--font-mono); font-size: 0.7rem;
+      color: var(--accent); border: 1px solid var(--accent);
+      padding: 0.2rem 0.6rem; border-radius: 100px; letter-spacing: 0.08em;
     }
 
     /* ── HERO ── */
     .hero {
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
       min-height: calc(100vh - 65px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 4rem 1.5rem;
-      text-align: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 4rem 1.5rem; text-align: center;
     }
-
     .hero-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      color: var(--accent);
-      text-transform: uppercase;
+      font-family: var(--font-mono); font-size: 0.75rem;
+      letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase;
       margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.1s;
+      opacity: 0; animation: fadeUp 0.6s ease forwards 0.1s;
     }
-
     .hero h1 {
-      font-size: clamp(2.8rem, 8vw, 6rem);
-      font-weight: 800;
-      line-height: 1.0;
-      letter-spacing: -0.04em;
-      margin-bottom: 1.25rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.2s;
+      font-size: clamp(2.8rem, 8vw, 6rem); font-weight: 800;
+      line-height: 1.0; letter-spacing: -0.04em; margin-bottom: 1.25rem;
+      opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s;
     }
-
-    .hero h1 em {
-      font-style: normal;
-      color: var(--accent);
-      position: relative;
-    }
-
+    .hero h1 em { font-style: normal; color: var(--accent); }
     .hero-sub {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 480px;
-      line-height: 1.7;
-      margin-bottom: 3rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.3s;
+      font-size: 1.05rem; color: var(--muted); max-width: 480px;
+      line-height: 1.7; margin-bottom: 3rem;
+      opacity: 0; animation: fadeUp 0.6s ease forwards 0.3s;
     }
 
-    /* ── FORM CARD ── */
+    /* ── SCANNER FORM CARD ── */
     .form-card {
-      width: 100%;
-      max-width: 560px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.4s;
+      width: 100%; max-width: 560px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem;
+      opacity: 0; animation: fadeUp 0.6s ease forwards 0.4s;
       position: relative;
     }
-
     .form-card::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border-radius: 17px;
+      content: ''; position: absolute; inset: -1px; border-radius: 17px;
       background: linear-gradient(135deg, var(--accent-dim), transparent 60%);
       pointer-events: none;
     }
-
-    .input-row {
-      display: flex;
-      gap: 0.75rem;
-      align-items: stretch;
-    }
-
+    .input-row { display: flex; gap: 0.75rem; align-items: stretch; }
     .url-input {
-      flex: 1;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.85rem 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      flex: 1; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.85rem 1rem;
+      font-family: var(--font-mono); font-size: 0.85rem; color: var(--text);
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
     }
-
     .url-input::placeholder { color: var(--muted); }
-
-    .url-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-dim);
-    }
-
+    .url-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
     .submit-btn {
-      background: var(--accent);
-      color: #0a0a0f;
-      border: none;
-      border-radius: 10px;
-      padding: 0.85rem 1.5rem;
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
-      white-space: nowrap;
+      background: var(--accent); color: #0a0a0f; border: none;
+      border-radius: 10px; padding: 0.85rem 1.5rem;
+      font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
+      cursor: pointer; white-space: nowrap;
       transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
     }
-
-    .submit-btn:hover {
-      opacity: 0.9;
-      box-shadow: 0 0 20px var(--accent-glow);
-    }
-
+    .submit-btn:hover { opacity: 0.9; box-shadow: 0 0 20px var(--accent-glow); }
     .submit-btn:active { transform: scale(0.97); }
-
-    /* ── RESULT ── */
     .result-box {
-      margin-top: 1.25rem;
-      padding: 0.9rem 1rem;
-      border-radius: 10px;
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-align: center;
+      margin-top: 1.25rem; padding: 0.9rem 1rem; border-radius: 10px;
+      font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700;
+      text-align: center; display: none;
+    }
+    .result-box.visible { display: block; }
+    .result-box.safe   { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent); }
+    .result-box.danger { background: var(--danger-dim); color: var(--danger); border: 1px solid var(--danger); }
+    .result-box.warn   { background: var(--warn-dim);   color: var(--warn);   border: 1px solid var(--warn); }
+
+    /* Report this URL link (shown after scan) */
+    .report-nudge {
+      margin-top: 0.85rem; text-align: center;
+      font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);
       display: none;
     }
-
-    .result-box.visible { display: block; }
-    .result-box.safe    { background: var(--accent-dim);  color: var(--accent); border: 1px solid var(--accent); }
-    .result-box.danger  { background: var(--danger-dim);  color: var(--danger); border: 1px solid var(--danger); }
-    .result-box.warn    { background: var(--warn-dim);    color: var(--warn);   border: 1px solid var(--warn); }
-
-    /* ── HOW IT WORKS ── */
-    .section {
-      position: relative;
-      z-index: 1;
-      padding: 5rem 1.5rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .section h2 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 3rem;
-    }
-
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .step-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.75rem;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .step-card:hover {
-      border-color: rgba(0,255,136,0.3);
-      transform: translateY(-3px);
-    }
-
-    .step-num {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      margin-bottom: 1rem;
-    }
-
-    .step-card h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .step-card p {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.65;
-    }
+    .report-nudge.visible { display: block; }
+    .report-nudge a { color: var(--accent); text-decoration: none; }
+    .report-nudge a:hover { text-decoration: underline; }
 
     /* ── STATS BAR ── */
     .stats-bar {
-      position: relative;
-      z-index: 1;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
       padding: 2.5rem 1.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 3rem;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem;
     }
-
-    .stat {
-      text-align: center;
-    }
-
+    .stat { text-align: center; }
     .stat-num {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: -0.03em;
-      line-height: 1;
+      font-size: 2.2rem; font-weight: 800; color: var(--accent);
+      letter-spacing: -0.03em; line-height: 1;
+    }
+    .stat-label { font-size: 0.82rem; color: var(--muted); margin-top: 0.4rem; }
+
+    /* ── HOW IT WORKS ── */
+    .section {
+      position: relative; z-index: 1;
+      padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto;
+    }
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .section h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800;
+      letter-spacing: -0.03em; margin-bottom: 3rem;
+    }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .step-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .step-card:hover { border-color: rgba(0,255,136,0.3); transform: translateY(-3px); }
+    .step-num {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: var(--accent); letter-spacing: 0.1em; margin-bottom: 1rem;
+    }
+    .step-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .step-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+    /* ════════════════════════════════════════
+       REPORT PHISHING SECTION
+    ════════════════════════════════════════ */
+    #report {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 5.5rem 1.5rem;
+      max-width: 800px; margin: 0 auto;
+    }
+    .report-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em;
+      color: var(--accent); background: var(--accent-dim);
+      border: 1px solid var(--accent-border); border-radius: 4px;
+      padding: 5px 12px; margin-bottom: 1.5rem;
+    }
+    .report-tag::before {
+      content: ''; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--accent);
+    }
+    #report h2 {
+      font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 0.75rem;
+    }
+    #report h2 em { font-style: normal; color: var(--accent); }
+    .report-sub {
+      font-size: 0.95rem; color: var(--muted); line-height: 1.7;
+      margin-bottom: 2.75rem; max-width: 500px;
     }
 
-    .stat-label {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 0.4rem;
+    /* Form card */
+    .rform-card {
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 14px; padding: 2.25rem;
+    }
+    .rfield { margin-bottom: 1.5rem; }
+    .rfield-label {
+      display: block; font-family: var(--font-mono); font-size: 0.68rem;
+      font-weight: 700; color: var(--muted); letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .rfield-label .req { color: var(--accent); margin-left: 2px; }
+    .rfield-label .opt { color: var(--faint); font-weight: 400; text-transform: none; letter-spacing: 0; margin-left: 4px; }
+
+    .inp-wrap { position: relative; }
+    .inp-wrap svg {
+      position: absolute; left: 13px; top: 50%;
+      transform: translateY(-50%); pointer-events: none;
+    }
+    .rinput, .rselect, .rtextarea {
+      width: 100%; background: var(--bg); border: 1px solid var(--border2);
+      color: var(--text); font-family: var(--font-mono); font-size: 0.82rem;
+      border-radius: 8px; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .rinput, .rselect { height: 46px; padding: 0 13px; }
+    .rinput.has-icon { padding-left: 40px; }
+    .rinput:focus, .rselect:focus, .rtextarea:focus {
+      border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+    .rinput.err, .rselect.err, .rtextarea.err {
+      border-color: var(--danger); box-shadow: 0 0 0 3px rgba(255,59,92,0.1);
+    }
+    .rinput::placeholder, .rtextarea::placeholder { color: var(--faint); font-size: 0.78rem; }
+    .rselect {
+      appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23555' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 13px center;
+    }
+    .rselect option { background: #1a1a2e; }
+    .rtextarea { padding: 12px 13px; resize: vertical; min-height: 110px; line-height: 1.65; }
+
+    .rfield-error { font-size: 0.72rem; color: var(--danger); font-family: var(--font-mono); margin-top: 5px; display: none; }
+    .rfield-error.on { display: block; }
+    .char-count { font-size: 0.68rem; color: var(--faint); font-family: var(--font-mono); text-align: right; margin-top: 4px; }
+
+    .rfield-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; }
+
+    /* Severity pills */
+    .sev-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .sev-pill {
+      padding: 8px 14px; border-radius: 6px;
+      border: 1px solid var(--border2); background: var(--bg);
+      color: var(--muted); font-family: var(--font-mono); font-size: 0.75rem;
+      cursor: pointer; transition: all 0.15s; user-select: none; letter-spacing: 0.04em;
+    }
+    .sev-pill:hover { border-color: #444; color: #bbb; }
+    .sev-pill[data-sev="low"].selected    { background: rgba(59,109,17,0.15);  border-color: #3b6d11; color: #97c459; }
+    .sev-pill[data-sev="medium"].selected { background: rgba(186,117,23,0.15); border-color: #ba7517; color: #ef9f27; }
+    .sev-pill[data-sev="high"].selected   { background: rgba(163,45,45,0.15);  border-color: #a32d2d; color: #f09595; }
+    .sev-pill[data-sev="critical"].selected { background: rgba(226,75,74,0.18); border-color: #e24b4a; color: #f7c1c1; }
+
+    .rform-divider { border: none; border-top: 1px solid var(--border); margin: 1.75rem 0; }
+
+    /* Submit */
+    .rsubmit-btn {
+      width: 100%; height: 52px; background: var(--accent); color: #0a0a0f;
+      border: none; border-radius: 8px; font-family: var(--font-display);
+      font-size: 0.95rem; font-weight: 800; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      letter-spacing: -0.01em;
+      transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+    }
+    .rsubmit-btn:hover { opacity: 0.9; box-shadow: 0 0 24px var(--accent-glow); }
+    .rsubmit-btn:active { transform: scale(0.99); }
+    .rsubmit-btn.loading { pointer-events: none; opacity: 0.6; }
+    .rsubmit-btn .spinner {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid rgba(0,0,0,0.2); border-top-color: #000;
+      animation: spin 0.7s linear infinite; display: none;
+    }
+    .rsubmit-btn.loading .btn-label { display: none; }
+    .rsubmit-btn.loading .spinner { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .form-note { font-size: 0.72rem; color: var(--muted); font-family: var(--font-mono); text-align: center; margin-top: 1rem; }
+
+    /* ML inline scan strip */
+    .ml-strip {
+      display: none; margin-top: 0.85rem; padding: 0.7rem 0.9rem;
+      border-radius: 6px; font-family: var(--font-mono); font-size: 0.75rem;
+      align-items: center; gap: 8px;
+    }
+    .ml-strip.on { display: flex; }
+    .ml-strip.safe   { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-border); }
+    .ml-strip.danger { background: var(--danger-dim); color: var(--danger); border: 1px solid var(--danger); }
+    .ml-strip.warn   { background: var(--warn-dim);   color: var(--warn);   border: 1px solid var(--warn); }
+
+    /* Success state */
+    .success-card {
+      display: none; background: rgba(0,255,136,0.05);
+      border: 1px solid var(--accent-border); border-radius: 14px;
+      padding: 3rem 2rem; text-align: center;
+    }
+    .success-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--accent-dim); border: 1px solid var(--accent-border);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+    .success-card h3 { font-size: 1.3rem; color: var(--accent); margin-bottom: 0.5rem; }
+    .success-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 0.3rem; }
+    .success-card .rid { font-family: var(--font-mono); font-size: 0.72rem; color: var(--faint); }
+    .reset-link {
+      display: inline-block; margin-top: 1.5rem;
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--accent); background: none; border: none; cursor: pointer;
+      text-decoration: underline; text-underline-offset: 3px;
     }
 
     /* ── FOOTER ── */
     footer {
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
       border-top: 1px solid var(--border);
       padding: 2rem 2.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; gap: 1rem;
     }
-
-    footer p {
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
+    footer p { font-size: 0.82rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
     .footer-links a {
-      font-size: 0.82rem;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
+      font-size: 0.82rem; color: var(--muted);
+      text-decoration: none; transition: color 0.2s;
     }
-
     .footer-links a:hover { color: var(--accent); }
 
     /* ── ANIMATIONS ── */
@@ -366,30 +377,35 @@
     }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 520px) {
+    @media (max-width: 560px) {
       nav { padding: 1rem 1.25rem; }
       .input-row { flex-direction: column; }
-      .form-card { padding: 1.5rem; }
+      .form-card, .rform-card { padding: 1.4rem; }
+      .rfield-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
-<body>
+<body data-scanned-url="{{ scanned_url | default('') }}" data-scroll-to-report="{{ '1' if scroll_to_report else '' }}">
 
   <!-- NAV -->
   <nav>
     <a href="/" class="logo">
       <span class="logo-icon">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
           <path d="M9 1L1 5V9C1 13.4 4.4 17.5 9 18C13.6 17.5 17 13.4 17 9V5L9 1Z" fill="#0a0a0f" stroke="#0a0a0f" stroke-width="0.5"/>
           <path d="M7 9L8.5 10.5L11.5 7.5" stroke="#00ff88" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </span>
       PhishRadar
     </a>
-    <span class="nav-badge">ML-POWERED</span>
+    <div class="nav-right">
+      <a class="nav-link" href="#report">Report Phishing</a>
+      <a class="nav-link" href="{{ url_for('about') }}">About</a>
+      <span class="nav-badge">ML-POWERED</span>
+    </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- ══════════════ HERO / SCANNER ══════════════ -->
   <section class="hero">
     <p class="hero-eyebrow">Real-time URL analysis</p>
     <h1>Is that link<br><em>safe to click?</em></h1>
@@ -404,8 +420,9 @@
             class="url-input"
             type="text"
             name="url"
-            id="url"
+            id="heroUrl"
             placeholder="e.g. suspicious-login.example.com"
+            value="{{ scanned_url or '' }}"
             autocomplete="off"
             spellcheck="false"
           />
@@ -414,18 +431,17 @@
       </form>
 
       {% if predict %}
-      <div class="result-box visible
-        {% if '✅' in predict %}safe
-        {% elif '❌' in predict %}danger
-        {% else %}warn{% endif %}
-      ">
-        {{ predict }}
-      </div>
+      <div class="result-box visible {{ predict_css }}">{{ predict }}</div>
+      {% if predict_css in ['danger', 'warn'] %}
+      <p class="report-nudge visible">
+        Looks dangerous? <a href="#report" onclick="prefillReport()">Report it →</a>
+      </p>
+      {% endif %}
       {% endif %}
     </div>
   </section>
 
-  <!-- STATS -->
+  <!-- ══════════════ STATS ══════════════ -->
   <div class="stats-bar">
     <div class="stat">
       <div class="stat-num">99.2%</div>
@@ -445,7 +461,7 @@
     </div>
   </div>
 
-  <!-- HOW IT WORKS -->
+  <!-- ══════════════ HOW IT WORKS ══════════════ -->
   <section class="section">
     <p class="section-label">How it works</p>
     <h2>Three steps to<br>stay protected</h2>
@@ -468,13 +484,255 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- ══════════════ REPORT PHISHING ══════════════ -->
+  <section id="report">
+    <div class="report-tag">REPORT PHISHING</div>
+    <h2>Flag a <em>threat.</em><br>Protect everyone.</h2>
+    <p class="report-sub">
+      Spotted a suspicious link? Submit it and our ML engine will analyse it in real-time — and add it to the community threat feed.
+    </p>
+
+    <!-- FORM -->
+    <div class="rform-card" id="rformCard">
+
+      <div class="rfield">
+        <label class="rfield-label" for="rUrl">Phishing URL or Domain <span class="req">*</span></label>
+        <div class="inp-wrap">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="6.5" stroke="#555" stroke-width="1.2"/>
+            <path d="M2 8h12M8 2c-2 2-3 4-3 6s1 4 3 6M8 2c2 2 3 4 3 6s-1 4-3 6" stroke="#555" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <input class="rinput has-icon" id="rUrl" type="text" placeholder="https://suspicious-site.com/login" />
+        </div>
+        <!-- Inline ML scan strip — updates as user types + clicks scan -->
+        <div class="ml-strip" id="mlStrip"></div>
+        <p class="rfield-error" id="rUrlErr"></p>
+      </div>
+
+      <div class="rfield">
+        <label class="rfield-label" for="rEmail">
+          Your Email <span class="opt">(optional — notified when processed)</span>
+        </label>
+        <div class="inp-wrap">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+            <rect x="1.5" y="3.5" width="13" height="9" rx="1.5" stroke="#555" stroke-width="1.2"/>
+            <path d="M1.5 5l6.5 4.5L14.5 5" stroke="#555" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <input class="rinput has-icon" id="rEmail" type="email" placeholder="you@example.com" />
+        </div>
+        <p class="rfield-error" id="rEmailErr"></p>
+      </div>
+
+      <div class="rfield-row">
+        <div>
+          <label class="rfield-label" for="rThreat">Threat Type <span class="req">*</span></label>
+          <select class="rselect" id="rThreat">
+            <option value="">Select type…</option>
+            <option value="phishing">Phishing</option>
+            <option value="malware">Malware</option>
+            <option value="scam">Scam</option>
+            <option value="spoofing">Spoofing</option>
+            <option value="ransomware">Ransomware</option>
+            <option value="other">Other</option>
+          </select>
+          <p class="rfield-error" id="rThreatErr"></p>
+        </div>
+        <div>
+          <label class="rfield-label">Severity <span class="req">*</span></label>
+          <div class="sev-pills" id="sevPills">
+            <div class="sev-pill" data-sev="low">Low</div>
+            <div class="sev-pill" data-sev="medium">Medium</div>
+            <div class="sev-pill" data-sev="high">High</div>
+            <div class="sev-pill" data-sev="critical">Critical</div>
+          </div>
+          <p class="rfield-error" id="rSevErr"></p>
+        </div>
+      </div>
+
+      <hr class="rform-divider" />
+
+      <div class="rfield">
+        <label class="rfield-label" for="rDetails">Additional Details</label>
+        <textarea class="rtextarea" id="rDetails" maxlength="500"
+          placeholder="Describe why you believe this site is malicious — what triggered your suspicion?"></textarea>
+        <p class="char-count" id="charCount">0 / 500</p>
+      </div>
+
+      <button class="rsubmit-btn" id="rSubmitBtn" onclick="submitReport()">
+        <span class="btn-label" style="display:flex;align-items:center;gap:10px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 8h12M10 4l4 4-4 4" stroke="#0a0a0f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Report Phishing Now
+        </span>
+        <div class="spinner"></div>
+      </button>
+      <p class="form-note">Reports are reviewed by our ML engine within seconds. False positives are filtered automatically.</p>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="success-card" id="rSuccessCard">
+      <div class="success-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12.5l5 5 9-9" stroke="#00ff88" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>Report submitted</h3>
+      <p>Our ML engine has scanned the URL.</p>
+      <p>You'll be notified if a match is confirmed.</p>
+      <p class="rid" id="rIdText"></p>
+      <button class="reset-link" onclick="resetReport()">Submit another report</button>
+    </div>
+  </section>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
   <footer>
     <p>© 2025 PhishRadar. Built with Flask + scikit-learn.</p>
     <div class="footer-links">
+      <a href="#report">Report Phishing</a>
       <a href="{{ url_for('about') }}">About</a>
     </div>
   </footer>
 
+  <script>
+    // ── Pre-fill from hero scan ──
+    const _scannedUrl = document.body.dataset.scannedUrl || null;
+
+    function prefillReport() {
+      if (_scannedUrl) {
+        document.getElementById('rUrl').value = _scannedUrl;
+        document.getElementById('rThreat').value = 'phishing';
+      }
+    }
+
+    // ── Auto-scroll if routed via /report ──
+    const _scrollToReport = document.body.dataset.scrollToReport === '1';
+    if (_scrollToReport) {
+      window.addEventListener('load', () => {
+        document.getElementById('report').scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
+    // ── Severity pills ──
+    let selectedSev = null;
+    document.querySelectorAll('.sev-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.sev-pill').forEach(p => p.classList.remove('selected'));
+        pill.classList.add('selected');
+        selectedSev = pill.dataset.sev;
+        document.getElementById('rSevErr').classList.remove('on');
+      });
+    });
+
+    // ── Char counter ──
+    document.getElementById('rDetails').addEventListener('input', function () {
+      document.getElementById('charCount').textContent = this.value.length + ' / 500';
+    });
+
+    // ── Inline ML scan on URL blur ──
+    document.getElementById('rUrl').addEventListener('blur', async function () {
+      const url = this.value.trim();
+      if (!url) return;
+      try {
+        const res  = await fetch('/api/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
+        const data = await res.json();
+        if (data.success) showMlStrip(data);
+      } catch (_) {}
+    });
+
+    function showMlStrip(data) {
+      const strip = document.getElementById('mlStrip');
+      const icons = { safe: '✓', danger: '✗', warn: '⚠' };
+      strip.className = 'ml-strip on ' + (data.css_class || 'warn');
+      strip.textContent = (icons[data.label] || '⚠') + '  ML pre-scan: ' + data.text;
+    }
+
+    // ── Error helpers ──
+    function setErr(inputId, errId, msg) {
+      const inp = document.getElementById(inputId);
+      const err = document.getElementById(errId);
+      if (inp) inp.classList.add('err');
+      if (err) { err.textContent = msg; err.classList.add('on'); }
+    }
+    function clearErr(inputId, errId) {
+      const inp = document.getElementById(inputId);
+      const err = document.getElementById(errId);
+      if (inp) inp.classList.remove('err');
+      if (err) { err.classList.remove('on'); err.textContent = ''; }
+    }
+    ['rUrl','rEmail','rThreat','rDetails'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', () => {
+        el.classList.remove('err');
+        const errMap = { rUrl:'rUrlErr', rEmail:'rEmailErr', rThreat:'rThreatErr', rDetails:null };
+        if (errMap[id]) { const e = document.getElementById(errMap[id]); if (e) e.classList.remove('on'); }
+      });
+    });
+
+    // ── Submit ──
+    async function submitReport() {
+      let valid = true;
+      const url     = document.getElementById('rUrl').value.trim();
+      const email   = document.getElementById('rEmail').value.trim();
+      const threat  = document.getElementById('rThreat').value;
+      const details = document.getElementById('rDetails').value.trim();
+
+      if (!url) { setErr('rUrl','rUrlErr','URL is required.'); valid = false; }
+      else if (!/^https?:\/\/.+/.test(url) && !url.includes('.')) { setErr('rUrl','rUrlErr','Enter a valid URL.'); valid = false; }
+
+      if (!threat) { setErr('rThreat','rThreatErr','Please select a threat type.'); valid = false; }
+
+      if (!selectedSev) {
+        document.getElementById('rSevErr').textContent = 'Please select a severity level.';
+        document.getElementById('rSevErr').classList.add('on');
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      const btn = document.getElementById('rSubmitBtn');
+      btn.classList.add('loading');
+
+      try {
+        const res  = await fetch('/api/report', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, email, threat_type: threat, severity: selectedSev, details })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          document.getElementById('rformCard').style.display = 'none';
+          document.getElementById('rSuccessCard').style.display = 'block';
+          document.getElementById('rIdText').textContent = 'Report ID: #' + data.report_id;
+          if (data.ml_result) showMlStrip(data.ml_result);
+        } else if (data.errors) {
+          const map = { url:['rUrl','rUrlErr'], email:['rEmail','rEmailErr'], threat_type:['rThreat','rThreatErr'] };
+          for (const [k, v] of Object.entries(data.errors)) {
+            if (map[k]) setErr(map[k][0], map[k][1], v);
+          }
+        }
+      } catch (_) {
+        alert('Network error — please try again.');
+      } finally {
+        btn.classList.remove('loading');
+      }
+    }
+
+    function resetReport() {
+      document.getElementById('rSuccessCard').style.display = 'none';
+      document.getElementById('rformCard').style.display = 'block';
+      ['rUrl','rEmail','rDetails'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      document.getElementById('rThreat').value = '';
+      document.getElementById('charCount').textContent = '0 / 500';
+      document.getElementById('mlStrip').className = 'ml-strip';
+      document.querySelectorAll('.sev-pill').forEach(p => p.classList.remove('selected'));
+      selectedSev = null;
+    }
+  </script>
 </body>
 </html>

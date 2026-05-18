@@ -1,4 +1,4 @@
-# Phishing Detection System
+# Phishing Detection System + community reporting tool - PhishRadar
 
 A Flask-based web application that detects phishing websites using machine learning. The system analyzes URLs and classifies them as legitimate or phishing with confidence scores.
 
@@ -9,13 +9,14 @@ A Flask-based web application that detects phishing websites using machine learn
 - 🎨 **User-Friendly Interface**: Simple web interface for URL submission
 - ⚡ **Real-time Detection**: Instant feedback on website legitimacy
 - 📈 **ML-Powered**: Uses trained machine learning models for accurate detection
+- 📋 **Reporting page**: lets user report suspicious websites with added details
 
 ## Tech Stack
 
 - **Backend**: Flask (Python web framework)
 - **ML/Data Processing**: scikit-learn, NumPy, Pandas
 - **Frontend**: HTML, CSS, Jinja2 templates
-- **Database**: SQLAlchemy (optional, for user management)
+- **Database**: SQLAlchemy
 - **Authentication**: Flask-Login
 
 ## Project Structure
@@ -48,8 +49,8 @@ A Flask-based web application that detects phishing websites using machine learn
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/phishing-detection-system.git
-cd phishing-detection-system
+git clone https://github.com/Latehowler/phishradar.git
+cd phishradar
 ```
 
 2. **Create a virtual environment**
@@ -88,16 +89,16 @@ The application will be available at `http://localhost:5000`
 1. Open the web application in your browser
 2. Enter a URL you want to check
 3. The system will analyze the URL and display:
-   - **✅ Legit website**: Safe to visit
-   - **⚠️ Suspicious website**: Proceed with caution
-   - **❌ Phishing detected**: Likely a phishing attempt
+   - **✅ Legit website**
+   - **⚠️ Suspicious website**
+   - **❌ Phishing detected**
 
 ## Model Details
 
-- **Model Type**: Naive Bayes Classifier
+- **Model Type**: Naive Bayes and logistic Regression Classifier
 - **Training Data**: Phishing website URLs dataset (`Dataset/phishing_site_urls.csv`)
 - **Features**: URL text features extracted using TF-IDF vectorization
-- **Accuracy**: [Add your model's accuracy metrics]
+- **Accuracy**: 90+%
 
 ## Dependencies
 
@@ -122,33 +123,23 @@ SECRET_KEY=your-secret-key-here
 DEBUG=False
 ```
 
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Authors
 
-- Your Name (@yourprofile)
+- Oladokun Tife
 
 ## Acknowledgments
 
-- Dataset source: [Add if applicable]
+- Dataset source: phishtank/Kaggle
 - ML framework: scikit-learn
 - Web framework: Flask
 
 ## Contact
 
-For questions or feedback, please email: your.email@example.com
+For questions or feedback, please email: oladokuntife@gmail.com
 
 ## Disclaimer
 
