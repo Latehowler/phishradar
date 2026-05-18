@@ -83,6 +83,7 @@ python app.py
 ```
 
 The application will be available at `http://localhost:5000`
+The database for reported websites will be available at 'http://localhost:5000/admin/reports'
 
 ### How to Use
 
